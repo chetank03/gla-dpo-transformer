@@ -23,6 +23,13 @@ This project implements a complete pipeline for training and aligning language m
 pip install -r requirements.txt
 ```
 
+## Pre-trained Weights
+
+To test the model without training from scratch, you can download pre-trained weights from Google Drive:
+
+**Download Link:** [ml_weights folder](https://drive.google.com/drive/folders/1Yj-rZV2K7YTHKCWvE9MK93m5sSUusUDG?usp=share_link)
+
+
 ## Usage
 
 ### 1. Pretrain GLA Transformer
