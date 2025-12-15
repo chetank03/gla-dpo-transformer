@@ -128,6 +128,14 @@ Linear Attention: Improved coherence but occasional loss of long-range structure
 Gated Linear Attention: Smoother narrative flow and better continuity
 These results suggest that gating helps preserve relevant context over longer generations while retaining the efficiency benefits of linear attention.
 
+## Web-Based Text Generation Interface
+
+![Interactive text generation interface built using Gradio](images/gradio_interface.png)
+
+To facilitate qualitative evaluation and easy interaction with the trained models, we built
+a web-based text generation interface using Gradio. The interface allows users to load trained
+checkpoints, adjust model and sampling parameters, and generate text interactively.
+
 ## What We Learned
 
 This project helped us understand the practical trade-offs in modern language model design.
