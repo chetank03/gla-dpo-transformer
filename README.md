@@ -13,12 +13,12 @@ This project implements a complete pipeline for training and aligning language m
 ## Custom Training Data
 
 We experimented with a custom training setup using the
-[PubMedQA](https://huggingface.co/datasets/qiaojin/PubMedQA) dataset. We used the training split and selected
-only the long-answer field, excluding the question text.
+[TinyStories](https://huggingface.co/datasets/roneneldan/TinyStories) dataset. We used the
+training split and selected only the story text, excluding any additional metadata.
 
-The motivation for this choice was to expose the model to medical terminology and
-domain-specific language, allowing us to evaluate whether the model could generate
-more technical and structured outputs.
+This choice was motivated by the simplicity and narrative structure of the dataset, which
+allowed us to evaluate the model’s ability to learn coherent storytelling and basic
+language patterns under limited compute.
 
 ## Project Structure
 
