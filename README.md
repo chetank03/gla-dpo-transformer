@@ -105,7 +105,7 @@ python generate.py \
 
 Training metrics for gated linear attention
 
-![Training metrics for gated linear attention](images/training_matrix.jpeg)
+![Training metrics for gated linear attention](images/training_matrix.JPEG)
 
 Sample
 
