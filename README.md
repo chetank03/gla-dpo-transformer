@@ -91,7 +91,46 @@ python generate.py \
 - Transformer blocks: 6 (configurable)
 - Sequence length: 1024 tokens (configurable)
 
-## Results
+## Results and Observations
 
-Training results, metrics, and example generations can be obtained by running the training scripts and using the inference interface.
+Results and Observations
+Training Stability and Convergence
 
+
+
+Training loss curves demonstrate stable convergence across standard Transformer, Linear Attention, and Gated Linear Attention models.
+Both linear-complexity attention variants converge smoothly, with Gated Linear Attention achieving marginally lower step-wise loss at equivalent training steps. This suggests that the learned gating mechanism improves memory retention during training.
+
+Comparison: Linear vs Gated Linear Attention
+
+Direct comparison at identical epochs and steps shows that Gated Linear Attention consistently matches or slightly improves upon Linear Attention loss values, while maintaining the same O(N) computational complexity.
+This indicates that gating provides better control over historical context without introducing additional computational overhead.
+
+Efficiency and Inference Behavior
+
+Unlike standard Transformers that rely on a growing KV cache during autoregressive generation, Linear and Gated Linear Attention maintain constant memory usage during inference.
+This makes them more suitable for long-context generation and resource-constrained environments.
+
+Effect of DPO Fine-Tuning
+
+After DPO fine-tuning, the model produces outputs with:
+
+Reduced repetition
+
+Improved coherence
+
+Better alignment with preferred responses
+
+Notably, these improvements are achieved without training a separate reward model, demonstrating the practicality of DPO for alignment in smaller-scale systems.
+
+Qualitative Generation Results
+
+Sample generations highlight clear qualitative differences:
+
+Standard Transformer: Fragmented outputs with higher repetition
+
+Linear Attention: Improved coherence but occasional loss of long-range structure
+
+Gated Linear Attention: Smoother narrative flow and better continuity
+
+These results suggest that gating helps preserve relevant context over longer generations while retaining the efficiency benefits of linear attention.
