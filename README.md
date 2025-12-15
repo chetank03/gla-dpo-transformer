@@ -93,7 +93,6 @@ python generate.py \
 
 ## Results and Observations
 
-Results and Observations
 Training Stability and Convergence
 
 ![Training loss comparison across models](images/training_loss.png)
@@ -131,15 +130,35 @@ These results suggest that gating helps preserve relevant context over longer ge
 
 ## What We Learned
 
-Efficiency-aware attention matters: Linear-complexity attention mechanisms enable training and inference on longer sequences without quadratic memory growth, making them practical under limited compute.
+This project helped us understand the practical trade-offs in modern language model design.
 
-Gating improves memory retention: Adding LSTM-style gates to linear attention helps the model selectively retain useful historical context, improving training stability and generation quality.
+We saw that attention efficiency becomes critical under limited compute. Linear attention enables longer-context modeling without the quadratic memory cost of standard Transformers, making experimentation more feasible.
 
-Pre-normalization is critical: Using RMSNorm with pre-normalization significantly improves gradient flow and stability compared to post-normalization.
+Adding gating to linear attention improved training stability and generation quality by helping the model decide what past information to retain. We also found that normalization choices matter—using RMSNorm with pre-normalization significantly improved optimization stability.
 
-DPO simplifies alignment: Direct Preference Optimization provides an effective alignment signal without the complexity of training a reward model, making it well-suited for lightweight pipelines.
+Through DPO fine-tuning, we learned that alignment does not require complex RL pipelines. Direct Preference Optimization provided a simple and effective way to improve output quality without training a separate reward model.
 
-Trade-offs are unavoidable: While linear attention improves scalability, some expressiveness of softmax attention is lost; gating partially mitigates this trade-off.
+Overall, this work reinforced that small-scale experiments can still yield meaningful insights when architectural choices are carefully evaluated.
 
-Small-scale experiments are still informative: Even with modest datasets and limited compute, meaningful architectural insights can be obtained through careful experimentation.
+## Limitations and Future Improvements
 
+This work was limited by compute and dataset scale. Training larger models on more diverse data would help validate the results more strongly.
+Evaluation focused mainly on loss trends and qualitative outputs. Future work could include quantitative metrics such as perplexity and human evaluation.
+
+While linear and gated attention are designed for long contexts, extremely long sequence lengths were not extensively tested. Additionally, higher-quality preference data could further improve DPO alignment.
+
+Future efforts could also focus on optimizing inference speed and memory usage for real-world applications.
+
+## Individual Contributions
+
+Chetan Krishna Kodeboyina
+
+Implemented the Gated Linear Attention architecture and training pipeline.
+Ran pretraining experiments on TinyStories.
+Built the text generation pipeline and Gradio-based interface.
+
+Bryce Miranda
+
+Implemented DPO fine-tuning for alignment.
+Prepared preference data and evaluated model outputs.
+Contributed to experimental analysis and documentation.
