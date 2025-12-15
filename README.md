@@ -103,7 +103,7 @@ Both linear-complexity attention variants converge smoothly, with Gated Linear A
 
 Comparison: Linear vs Gated Linear Attention
 
-![Linear vs Gated Linear Attention loss comparison](images/gated_vs_linear.png)
+![Linear vs Gated Linear Attention loss comparison](images/gatedVSlinear.png)
 
 Direct comparison at identical epochs and steps shows that Gated Linear Attention consistently matches or slightly improves upon Linear Attention loss values, while maintaining the same O(N) computational complexity.
 This indicates that gating provides better control over historical context without introducing additional computational overhead.
