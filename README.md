@@ -13,7 +13,7 @@ This project implements a complete pipeline for training and aligning language m
 ## Custom Training Data
 
 We experimented with a custom training setup using the
-[PubMedQA](https://pubmedqa.github.io/) dataset. We used the training split and selected
+[PubMedQA](https://huggingface.co/datasets/qiaojin/PubMedQA) dataset. We used the training split and selected
 only the long-answer field, excluding the question text.
 
 The motivation for this choice was to expose the model to medical terminology and
