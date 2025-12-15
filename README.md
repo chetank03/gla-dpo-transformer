@@ -96,12 +96,14 @@ python generate.py \
 Results and Observations
 Training Stability and Convergence
 
-
+![Training loss comparison across models](images/training_loss.png)
 
 Training loss curves demonstrate stable convergence across standard Transformer, Linear Attention, and Gated Linear Attention models.
 Both linear-complexity attention variants converge smoothly, with Gated Linear Attention achieving marginally lower step-wise loss at equivalent training steps. This suggests that the learned gating mechanism improves memory retention during training.
 
 Comparison: Linear vs Gated Linear Attention
+
+![Linear vs Gated Linear Attention loss comparison](images/gated_vs_linear.png)
 
 Direct comparison at identical epochs and steps shows that Gated Linear Attention consistently matches or slightly improves upon Linear Attention loss values, while maintaining the same O(N) computational complexity.
 This indicates that gating provides better control over historical context without introducing additional computational overhead.
@@ -112,13 +114,9 @@ Unlike standard Transformers that rely on a growing KV cache during autoregressi
 This makes them more suitable for long-context generation and resource-constrained environments.
 
 Effect of DPO Fine-Tuning
-
 After DPO fine-tuning, the model produces outputs with:
-
 Reduced repetition
-
 Improved coherence
-
 Better alignment with preferred responses
 
 Notably, these improvements are achieved without training a separate reward model, demonstrating the practicality of DPO for alignment in smaller-scale systems.
@@ -126,11 +124,22 @@ Notably, these improvements are achieved without training a separate reward mode
 Qualitative Generation Results
 
 Sample generations highlight clear qualitative differences:
-
 Standard Transformer: Fragmented outputs with higher repetition
-
 Linear Attention: Improved coherence but occasional loss of long-range structure
-
 Gated Linear Attention: Smoother narrative flow and better continuity
-
 These results suggest that gating helps preserve relevant context over longer generations while retaining the efficiency benefits of linear attention.
+
+## What We Learned
+
+Efficiency-aware attention matters: Linear-complexity attention mechanisms enable training and inference on longer sequences without quadratic memory growth, making them practical under limited compute.
+
+Gating improves memory retention: Adding LSTM-style gates to linear attention helps the model selectively retain useful historical context, improving training stability and generation quality.
+
+Pre-normalization is critical: Using RMSNorm with pre-normalization significantly improves gradient flow and stability compared to post-normalization.
+
+DPO simplifies alignment: Direct Preference Optimization provides an effective alignment signal without the complexity of training a reward model, making it well-suited for lightweight pipelines.
+
+Trade-offs are unavoidable: While linear attention improves scalability, some expressiveness of softmax attention is lost; gating partially mitigates this trade-off.
+
+Small-scale experiments are still informative: Even with modest datasets and limited compute, meaningful architectural insights can be obtained through careful experimentation.
+
