@@ -151,13 +151,13 @@ Future efforts could also focus on optimizing inference speed and memory usage f
 
 ## Individual Contributions
 
-- **Chetan Krishna Kodeboyina**
+**Chetan Krishna Kodeboyina**
 
 - Implemented the Gated Linear Attention architecture and training pipeline.
 - Ran pretraining experiments on TinyStories.
 - Built the text generation pipeline and Gradio-based interface.
 
-- **Bryce Miranda**
+**Bryce Miranda**
 
 - Implemented DPO fine-tuning for alignment.
 - Prepared preference data and evaluated model outputs.
