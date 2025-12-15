@@ -10,6 +10,16 @@ This project implements a complete pipeline for training and aligning language m
 - **Gated Linear Attention (GLA)**: An efficient linear-complexity attention mechanism
 - **Direct Preference Optimization (DPO)**: Alignment training without a separate reward model
 
+## Custom Training Data
+
+We experimented with a custom training setup using the
+[PubMedQA](https://pubmedqa.github.io/) dataset. We used the training split and selected
+only the long-answer field, excluding the question text.
+
+The motivation for this choice was to expose the model to medical terminology and
+domain-specific language, allowing us to evaluate whether the model could generate
+more technical and structured outputs.
+
 ## Project Structure
 
 - `gla_model.py`: GLA Transformer model implementation and pretraining script
