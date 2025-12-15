@@ -103,12 +103,17 @@ python generate.py \
 
 ## Results and Observations
 
-Training Stability and Convergence
+Training metrics for gated linear attention
 
-![Training loss comparison across models](images/training_loss.png)
+![Training metrics for gated linear attention](images/training_matrix.jpeg)
 
-Training loss curves demonstrate stable convergence across standard Transformer, Linear Attention, and Gated Linear Attention models.
-Both linear-complexity attention variants converge smoothly, with Gated Linear Attention achieving marginally lower step-wise loss at equivalent training steps. This suggests that the learned gating mechanism improves memory retention during training.
+Sample
+
+Once upon a time, there was a little girl. She was playing in the garden and she heard a strange and nose was very excited. She had a surprise for her mommy and daddy and a girl were going to the store with her mom. They had a big
+
+Sample p=0.95
+
+Once upon a time, a little boy named Timmy was very Youria and Timmy went to the park to play. Timmy saw a big horse was bright and beautiful, and he was very happy. He wanted to play with his friends outside, but his mom was busyma was walking in the park. He saw a big first-looking fairyill was feeling very curious. She had been playing with her blocks at the park before it was time for bedily to go outside and play. Dad saw her playing
 
 Comparison: Linear vs Gated Linear Attention
 
