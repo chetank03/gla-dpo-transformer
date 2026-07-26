@@ -1,0 +1,11 @@
+# Model weights. These are ~607 MB each and GitHub rejects blobs over 100 MB.
+ml_weights/
+*.pt
+*.pth
+*.ckpt
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/

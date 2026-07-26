@@ -14,7 +14,6 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 
-from datasets import load_dataset
 import tiktoken
 
 # Command-line arg parsing
@@ -666,6 +665,11 @@ def main():
 
     if args.hf_weight > 0.0:
         print(f"Loading HuggingFace dataset: {args.hf_dataset} ...")
+        # Imported here, not at module scope: `datasets` is only needed for
+        # HuggingFace training, and a top-level import made importing
+        # GLATransformer fail for anyone who only wants inference.
+        from datasets import load_dataset
+
         dataset = load_dataset(args.hf_dataset, split="train")
         dataset = dataset.select(range(min(20000, len(dataset))))
 

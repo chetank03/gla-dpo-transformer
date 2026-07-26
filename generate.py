@@ -12,6 +12,42 @@ except ImportError:
     sys.exit(1)
 
 
+def infer_config(state_dict, checkpoint, args):
+    """Recovers the model architecture from a checkpoint.
+
+    vocab_size, d_model, block_size and n_blocks are read from tensor shapes, which is
+    authoritative. n_heads and use_pre_norm cannot be recovered from shapes (q_proj is
+    d_model x d_model for any head count dividing d_model), so they come from the
+    'args' dict the pretraining script saves, and fall back to the CLI value.
+    """
+    saved = checkpoint.get("args") if isinstance(checkpoint, dict) else None
+    if not isinstance(saved, dict):
+        saved = {}
+
+    vocab_size, d_model = state_dict["token_embedding.weight"].shape
+    block_size = state_dict["positional_embedding.weight"].shape[0]
+    n_blocks = 1 + max(
+        int(k.split(".")[1]) for k in state_dict if k.startswith("blocks.")
+    )
+
+    return {
+        "vocab_size": int(vocab_size),
+        "d_model": int(d_model),
+        "block_size": int(block_size),
+        "n_blocks": int(n_blocks),
+        "n_heads": int(saved.get("n_heads", args.n_heads)),
+        "use_pre_norm": bool(saved.get("use_pre_norm", args.use_pre_norm)),
+    }
+
+
+def config_source(state_dict, checkpoint):
+    """Describes where n_heads and use_pre_norm came from, for the startup log."""
+    saved = checkpoint.get("args") if isinstance(checkpoint, dict) else None
+    if isinstance(saved, dict) and "n_heads" in saved:
+        return "shapes + checkpoint args"
+    return "shapes + CLI defaults for n_heads and use_pre_norm"
+
+
 def parse_args():
     """Parses command-line arguments for model loading and generation."""
     parser = argparse.ArgumentParser(
@@ -115,16 +151,19 @@ def main():
         print(f"Error loading checkpoint: {e}")
         return
 
-    # Instantiate and load model
+    # Instantiate and load model.
+    # The architecture is read off the checkpoint rather than taken from the CLI
+    # defaults, because a checkpoint whose shapes disagree with the defaults fails to
+    # load. Anything the checkpoint cannot tell us falls back to the CLI value.
+    config = infer_config(state_dict, checkpoint, args)
+    print(
+        "Model config: "
+        + ", ".join(f"{k}={v}" for k, v in config.items())
+        + f" (source: {config_source(state_dict, checkpoint)})"
+    )
+
     try:
-        model = GLATransformer(
-            vocab_size=vocab_size,
-            d_model=args.embed_size,
-            n_heads=args.n_heads,
-            n_blocks=args.n_blocks,
-            block_size=args.block_size,
-            use_pre_norm=args.use_pre_norm,
-        ).to(device)
+        model = GLATransformer(**config).to(device)
 
         model.load_state_dict(state_dict)
         model.eval()
